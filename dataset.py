@@ -1,7 +1,7 @@
 from pyteomics import mgf
 import tensorflow as tf
 import numpy as np
-import os,glob2
+import os,glob
 #os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 
@@ -103,9 +103,9 @@ def parse(dummy,mz,intensity):
 def get_dataset(dataset='train',maximum_steps=10000,batch_size=16,mode='training',weights=None):
     buffer_size=1*10**6 # in steps
 
-    phos_path=[glob2.glob('%s/*.phos.mgf'%(x)) for x in dataset]
+    phos_path=[glob.glob('%s/*.phos.mgf'%(x)) for x in dataset]
     phos_path=[i for g in phos_path for i in g] # flatten
-    other_path=[glob2.glob('%s/*.other.mgf'%(x)) for x in dataset]
+    other_path=[glob.glob('%s/*.other.mgf'%(x)) for x in dataset]
     other_path=[i for g in other_path for i in g] # flatten
 
     if mode=='training' or mode=='test':
@@ -186,8 +186,8 @@ def get_dataset_inference(mgf_file='example.mgf',batch_size=16):
 
 if __name__ == "__main__":
 
-    for x,i in get_dataset(dataset='*',maximum_steps=2,batch_size=1,mode='training'):
-        print(i)#,print(sum(x[0]),sum(x[1]))
+    for x,i in get_dataset(dataset=['training'],maximum_steps=2,batch_size=1,mode='training'):
+        print(x)#,print(sum(x[0]),sum(x[1]))
 
 
 
