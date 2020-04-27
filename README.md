@@ -47,10 +47,6 @@ python inference.py --tsv ./model/alpha_model_weights.hdf5 ./example/example.mgf
 
 the tsv-file contains the prediction score (column='score') and the predicted binary-labels (column='pred'):
 
-#### binary labels:
-  - phosphorylated = 1.0 
-  - unphosphorylated = 0.0
-
 ```
         title   scan    score   pred
 0       controllerType=0 controllerNumber=1 scan=10823  10823   0.98990786      1.0
@@ -74,6 +70,10 @@ the tsv-file contains the prediction score (column='score') and the predicted bi
 18      controllerType=0 controllerNumber=1 scan=77784  77784   0.27133223      0.0
 19      controllerType=0 controllerNumber=1 scan=82582  82582   0.2898352       0.0
 ```
+
+#### binary labels:
+  - phosphorylated = 1.0 
+  - unphosphorylated = 0.0
 
 
 ## Syntax
