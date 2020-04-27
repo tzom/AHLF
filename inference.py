@@ -45,6 +45,8 @@ pred_score = model.predict(ds,steps=some_big_number)#dirty-hack to repair: keras
 score = np.atleast_1d(np.squeeze(pred_score))
 pred = np.round(score)
 
+print('Writing results to file: %s'%args.out_file)
+
 if not args.tsv:
     np.savetxt(args.out_file,score)
 ###
@@ -62,3 +64,4 @@ if args.tsv:
     df = pd.DataFrame({'title':title_,'scan':scan_,'score':score,'pred':pred})
     df.to_csv(args.out_file,sep='\t')
 
+print('Done.')
