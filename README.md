@@ -1,21 +1,24 @@
 # AHLF - ad hoc learning of fragmentation patterns by deep learning
 
-Deep learning model (Temporal conv net, using dilated conv layers) detects post-translational modified peptides based on their ms/ms spectrum.
+Deep learning model (Temporal conv net, using dilated conv layers) detects post-translationally modified peptides based on their ms/ms spectrum.
 
 This repository is an implementation of our model as described in:
 
-'AHLF: ad hoc learning of fragmentation patterns in mass spectra detects post-translational modified peptides prior to database search by deep learning'
+'AHLF: ad hoc learning of fragmentation patterns in mass spectra detects post-translationally modified peptides prior to database search'
 
-## Dependencies
+## Getting started
 
-python (>=3.6), tensorflow (>=2.0), numpy, pyteomics
+Create a new conda environment (required packages are automatically installed when using **`ahlf_env.yml`**):
 
-[optional: pandas]
+```
+conda env create -f ahlf_env.yml
+conda activate ahlf_env
+```
 
 ## Input File
 
-AHLF accepts mgf-files. There is an example.mgf in the example-directory, it contains tandem spectra from: 10 phosphorylated peptides and 10 unphosphorylated peptides (in this particular order). 
-The provided mgf-file should look like this (initial ten lines):
+AHLF accepts mgf-files. The provided **`example/example.mgf`** contains tandem spectra from: 10 phosphorylated peptides and 10 unphosphorylated peptides (in this particular order). 
+The example looks like this (initial ten lines):
 
 ```
 BEGIN IONS
@@ -32,33 +35,21 @@ SCANS=10823
 
 ## Usage
 
-You can use the model on the example.mgf-file by using inference.py:
+You can use the model on the provided **`./example/example.mgf`** by using **`inference.py`**:
 
-Select a trained model from the model-dir (e.g. 'alpha_model_weights.hdf5')
-
-```
-python inference.py ./model/alpha_model_weights.hdf5 ./example/example.mgf results.txt
-```
-As a result the prediction scores are written into a txt-file.
-
-In case you want to keep 'title' and 'scan' from the mgf-file use the optional flag '--tsv': 
-
-Select a trained model from the model-dir (e.g. 'alpha_model_weights.hdf5')
-
-(you need to install pandas to create tsv-files)
+Select a trained model from the model-dir (e.g. **`alpha_model_weights.hdf5`**)
 
 ```
-python inference.py ./model/alpha_model_weights.hdf5 --tsv ./example/example.mgf results.tsv
+python inference.py --tsv ./model/alpha_model_weights.hdf5 ./example/example.mgf results.tsv
 ```
 
-## Output File (tsv-file)
+## Output File
 
 the tsv-file contains the prediction score (column='score') and the predicted binary-labels (column='pred'):
 
-binary labels are:
-
-phosphorylated=1.0;
-unphosphorylated=0.0
+#### binary labels:
+  - phosphorylated = 1.0 
+  - unphosphorylated = 0.0
 
 ```
         title   scan    score   pred
@@ -108,11 +99,11 @@ optional arguments:
 
 ## Training
 
-In order to train the model, e.g. on user-specific data, you can use training.py:
+In order to train the model, e.g. on user-specific data, you can use **`training.py`**:
 
-(the labels are taken from the filenames: ./training/dummy.phos.mgf and ./training/dummy.other.mgf):
+(the labels are taken from the filenames: **`./training/dummy.phos.mgf`** and **`./training/dummy.other.mgf`**):
 
-Training parameters can be changed in the training.py script directly.
+Training parameters can be changed in the **`training.py`** script directly.
 
 ```
 python training.py

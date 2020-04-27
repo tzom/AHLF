@@ -1,0 +1,10 @@
+name: ahlf_env
+channels:
+  - defaults 
+  - bioconda
+dependencies:
+  - tensorflow
+  - python
+  - numpy
+  - pyteomics
+  
