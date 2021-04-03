@@ -1,10 +1,12 @@
-# AHLF - ad hoc learning of fragmentation patterns by deep learning
+# AHLF - ad hoc learning of fragmentation patterns enabled by deep learning
 
 Deep learning model (Temporal conv net, using dilated conv layers) detects post-translationally modified peptides based on their ms/ms spectrum.
 
 This repository is an implementation of our model as described in:
 
-'AHLF: ad hoc learning of fragmentation patterns in mass spectra detects post-translationally modified peptides prior to database search'
+***AHLF: ad hoc learning of peptide fragmentation from mass spectra enables an interpretable detection of phosphorylated and cross-linked peptides***
+Tom Altenburg, Sven Giese, Shengbo Wang, Thilo Muth, Bernhard Y. Renard  
+bioRxiv 2020.05.19.101345; doi: https://doi.org/10.1101/2020.05.19.101345 
 
 ## Getting started
 
