@@ -3,7 +3,7 @@ import numpy as np
 import sys,os
 #import simplejson
 AUTOTUNE = tf.data.experimental.AUTOTUNE
-
+tf.compat.v1.disable_eager_execution()
 from dataset import get_dataset
 from network import network
 
@@ -25,7 +25,7 @@ model = tf.keras.Model(inputs=inp,outputs=sigm)
 bce=tf.keras.losses.BinaryCrossentropy(from_logits=False)
 
 learning_rate=5.0e-6
-model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate,clipnorm=1.0),loss=bce,val_loss=bce,metrics=['binary_accuracy','Recall','Precision'])
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate,clipnorm=1.0),loss=bce,metrics=['binary_accuracy','Recall','Precision'])
 
 batch_size=64
 
