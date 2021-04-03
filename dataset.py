@@ -5,8 +5,9 @@ import os,glob
 #os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 
+MZ_MIN=100
 MZ_MAX=1900
-SPECTRUM_RESOLUTION=2
+SEGMENT_SIZE=0.5
 k = 50
 
 def set_k(new_k):
@@ -14,9 +15,54 @@ def set_k(new_k):
     k = new_k
     return k
 
+def modulo_parse(dummy,mz,intensity):
+    dtype=tf.float32
+    mz = tf.cast(mz,dtype)
+    intensity = tf.cast(intensity,dtype)
+    intensity = ion_current_normalize(intensity)
+
+    greater_mask = tf.math.greater(mz,tf.zeros_like(mz)+MZ_MIN)    
+    # truncate :
+    smaller_mask = tf.math.less(mz,tf.zeros_like(mz)+MZ_MAX)
+    # put into joint mask:
+    mask = tf.logical_and(greater_mask,smaller_mask)
+    mask = tf.ensure_shape(mask,[None])
+    # apply mask:
+    trunc_mz = tf.boolean_mask(mz,mask)
+    trunc_intensity = tf.boolean_mask(intensity,mask)
+
+    def segment_argmax(values,indices):
+        i = tf.unique(indices)[0]
+        zero,one=tf.zeros(1,dtype=dtype),tf.ones(1,dtype=dtype)
+        return tf.vectorized_map(lambda x: tf.argmax(values*tf.where(indices==x,zero,one)),i)
+    
+    mz_mod = tf.math.floormod(trunc_mz,SEGMENT_SIZE) 
+    mz_div = tf.cast(tf.math.floordiv(trunc_mz-MZ_MIN,SEGMENT_SIZE),tf.int32)
+    
+    uniq_indices, i = tf.unique(mz_div)
+    aggr_intensity = tf.math.segment_max(trunc_intensity,i)
+    argmax_indices = segment_argmax(trunc_intensity,i)
+    aggr_mz_mod = tf.gather(mz_mod,argmax_indices) 
+        
+    aggr_intensity = aggr_intensity#/tf.reduce_sum(intensity**2)
+    aggr_mz_mod = aggr_mz_mod/SEGMENT_SIZE
+
+    shape = tf.constant([int((MZ_MAX-MZ_MIN)/SEGMENT_SIZE)])
+    print(uniq_indices,aggr_intensity)
+    print(aggr_mz_mod,aggr_intensity)
+    aggr_mz_mod = tf.scatter_nd(tf.expand_dims(uniq_indices,1), aggr_mz_mod, shape)
+    aggr_intensity = tf.scatter_nd(tf.expand_dims(uniq_indices,1), aggr_intensity, shape)
+    x = aggr_intensity
+    i = aggr_mz_mod
+    
+    x = tf.cast(x,tf.float32)
+    i = tf.cast(i,tf.float32)
+    output = tf.stack([x,i],axis=1)
+    return output, dummy
+
 def tf_preprocess_spectrum(dummy,mz,intensity):
     #global MZ_MAX, SPECTRUM_RESOLUTION
-   
+    SPECTRUM_RESOLUTION=2
     n_spectrum = MZ_MAX * 10**SPECTRUM_RESOLUTION
     mz = mz*10**SPECTRUM_RESOLUTION
     
@@ -142,7 +188,7 @@ def get_dataset(dataset='train',maximum_steps=10000,batch_size=16,mode='training
             ds = other_ds.concatenate(phos_ds)
 
         ### MAP & BATCH-REPEAT  ###        
-        ds = ds.map(lambda label,mz,intensities: tuple(parse(label,mz,intensities)),num_parallel_calls=AUTOTUNE) 
+        ds = ds.map(lambda label,mz,intensities: tuple(modulo_parse(label,mz,intensities)),num_parallel_calls=AUTOTUNE) 
         #ds = ds.repeat(batch_size)        
         if maximum_steps is None:
             ds = ds.repeat()
