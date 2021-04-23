@@ -3,8 +3,8 @@ channels:
   - defaults 
   - bioconda
 dependencies:
-  - tensorflow
-  - python
+  - tensorflow=2
+  - python=3.8
   - numpy
   - pyteomics
   
