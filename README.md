@@ -12,7 +12,7 @@ bioRxiv 2020.05.19.101345; doi: https://doi.org/10.1101/2020.05.19.101345
 
 **System requirements:** 
 - Linux (tested on Ubuntu 18.04),
-- Conda installed (e.g. follow documentation at [conda.io](conda.io)),
+- Conda installed (e.g. follow documentation at https://conda.io/projects/conda/en/latest/user-guide/install/index.html),
 - runs on both CPU and GPU machines. (However, for the optional interpretation code snippet having a GPU is essential).
 
 Create a new conda environment (required packages are automatically installed when using **`ahlf_env.yml`**):
