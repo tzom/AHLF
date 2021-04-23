@@ -16,6 +16,8 @@ bioRxiv 2020.05.19.101345; doi: https://doi.org/10.1101/2020.05.19.101345
 - Conda installed (e.g. follow documentation at https://conda.io/projects/conda/en/latest/user-guide/install/index.html),
 - runs on both CPU and GPU machines. (However, for the optional interpretation code snippet having a GPU is essential).
 
+**Note:** installation of required packages takes **up to several minutes** and any individual step (on the provided examples) takes less than one minute.
+
 Create a new conda environment (required packages are automatically installed when using **`ahlf_env.yml`**):
 
 ```
@@ -25,7 +27,7 @@ conda activate ahlf_env
 
 ## Input File
 
-AHLF accepts mgf-files. The provided **`example/example.mgf`** contains ms/ms spectra from: 10 phosphorylated peptides and 10 unphosphorylated peptides (in this particular order). 
+AHLF accepts MGF-files (.mgf). The provided **`example/example.mgf`** contains ms/ms spectra from: 10 phosphorylated peptides and 10 unphosphorylated peptides (in this particular order). 
 The example looks like this (initial ten lines):
 
 ```
@@ -131,12 +133,17 @@ In order to train the model, e.g. on user-specific data, you can use **`training
 
 Training parameters can be changed in the **`training.py`** script directly.
 
+
 ```
 python training.py
 ```
+## General usage
+
+AHLF can be applied to RAW data (e.g. .RAW-files) by converting them into MGF-files with third-party packages (e.g. https://github.com/compomics/ThermoRawFileParser).
+
 
 ## [OPTIONAL] Interpretation of AHLF
-**IMPORTANT: this step requieres a GPU with latest drivers installed**
+**IMPORTANT: this step requires a GPU with latest drivers installed**
 
 For interpretation additional packages need to be installed (specified in the **`ahlf_interpretation_env.yml'**), it is recommended to simply create a new dedicated conda environment:
 
