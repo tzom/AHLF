@@ -18,7 +18,14 @@ bioRxiv 2020.05.19.101345; doi: https://doi.org/10.1101/2020.05.19.101345
 
 **Note:** installation of required packages takes **up to several minutes** and any individual step (on the provided examples) takes less than one minute.
 
-Create a new conda environment (required packages are automatically installed when using **`ahlf_env.yml`**):
+Start by cloning this repository:
+
+```
+https://gitlab.com/dacs-hpi/AHLF.git
+cd AHLF
+```
+
+To install the required packages create a new conda environment (required packages are automatically installed when using **`ahlf_env.yml`**):
 
 ```
 conda env create -f ahlf_env.yml
