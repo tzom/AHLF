@@ -5,6 +5,7 @@ Deep learning model (Temporal conv net, using dilated conv layers) detects post-
 This repository is an implementation of our model as described in:
 
 ***AHLF: ad hoc learning of peptide fragmentation from mass spectra enables an interpretable detection of phosphorylated and cross-linked peptides***
+
 Tom Altenburg, Sven Giese, Shengbo Wang, Thilo Muth, Bernhard Y. Renard  
 bioRxiv 2020.05.19.101345; doi: https://doi.org/10.1101/2020.05.19.101345 
 
@@ -24,7 +25,7 @@ conda activate ahlf_env
 
 ## Input File
 
-AHLF accepts mgf-files. The provided **`example/example.mgf`** contains tandem spectra from: 10 phosphorylated peptides and 10 unphosphorylated peptides (in this particular order). 
+AHLF accepts mgf-files. The provided **`example/example.mgf`** contains ms/ms spectra from: 10 phosphorylated peptides and 10 unphosphorylated peptides (in this particular order). 
 The example looks like this (initial ten lines):
 
 ```
@@ -83,6 +84,24 @@ the tsv-file contains the prediction score (column='score') and the predicted bi
   - unphosphorylated = 0.0
 
 
+## AHLFx: detect cross-linked peptides (based on their ms/ms-spectrum)
+
+AHLFx can be used, simply by specifying the dedicated model weights (**`./AHLFx/alpha_model_x.hdf5`**). Here, we apply AHLFx to example data (**`./AHLFx/cross_linking_example.mgf**`) containing one spectrum of a cross-linked peptide and a spectrum of linear peptide (in this particular order):
+
+```
+python inference.py --tsv ./AHLFx/alpha_model_x.hdf5 ./AHLFx/cross_linking_example.mgf xlink_results.tsv
+```
+
+```
+	title	scan	score	pred
+0	example_csm	7787	0.5244542	1.0
+1	example_psm	5040	0.04545386	0.0
+``` 
+
+#### binary labels:
+  - cross-linked peptide spectrum match (CSM) = 1.0 
+  - linear peptide spectrum match (PSM) = 0.0
+
 ## Syntax
 Check out the help-page:
 ```
@@ -126,7 +145,7 @@ conda env create -f ahlf_interpretation_env.yml
 conda activate ahlf_interpretation_env
 ```
 
-If the above mentioned requierments are met then the following command creates a mirrorplot similar to the one shown below:
+If the above mentioned requirments are met then the following command creates a mirrorplot similar to the one shown below:
 
 ```
 python interpretation.py
