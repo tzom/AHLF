@@ -32,7 +32,6 @@ batch_size=64
 
 model.load_weights(args.model_weights)
 
-mgf_file = './example/20121206_KMJ_PC_OVISE_3_S15.example.mgf'
 mgf_file = args.mgf_file
 
 
