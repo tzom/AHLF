@@ -1,0 +1,13 @@
+name: ahlf_interpretation_env
+channels:
+  - defaults 
+  - bioconda
+  - conda-forge
+dependencies:
+  - tensorflow-gpu=2
+  - python=3.8
+  - numpy
+  - pyteomics
+  - shap
+  - matplotlib
+  

@@ -111,6 +111,25 @@ Training parameters can be changed in the **`training.py`** script directly.
 python training.py
 ```
 
+## [OPTIONAL] Interpretation of AHLF
+**IMPORTANT: this step requieres a GPU with latest drivers installed**
+
+For interpretation additional packages need to be installed (specified in the **`ahlf_interpretation_env.yml'**), it is recommended to simply create a new dedicated conda environment:
+
+```
+conda env create -f ahlf_interpretation_env.yml
+conda activate ahlf_interpretation_env
+```
+
+If the above mentioned requierments are met then the following command creates a mirrorplot similar to the one shown below:
+
+```
+python interpretation.py
+```
+
+![plot](./interpretation.png)
+
+
 ## Author
 
 Tom Altenburg (tzom)
