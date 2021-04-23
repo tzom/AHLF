@@ -21,7 +21,7 @@ bioRxiv 2020.05.19.101345; doi: https://doi.org/10.1101/2020.05.19.101345
 Start by cloning this repository:
 
 ```
-https://gitlab.com/dacs-hpi/AHLF.git
+git clone https://gitlab.com/dacs-hpi/AHLF.git
 cd AHLF
 ```
 
