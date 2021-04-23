@@ -95,7 +95,7 @@ the tsv-file contains the prediction score (column='score') and the predicted bi
 
 ## AHLFx: detect cross-linked peptides (based on their ms/ms-spectrum)
 
-AHLFx can be used, simply by specifying the dedicated model weights (**`./AHLFx/alpha_model_x.hdf5`**). Here, we apply AHLFx to example data (**`./AHLFx/cross_linking_example.mgf**`) containing one spectrum of a cross-linked peptide and a spectrum of linear peptide (in this particular order):
+AHLFx can be used, simply by specifying the dedicated model weights (**`./AHLFx/alpha_model_x.hdf5`**). Here, we apply AHLFx to example data (**`./AHLFx/cross_linking_example.mgf`**) containing one spectrum of a cross-linked peptide and a spectrum of linear peptide (in this particular order):
 
 ```
 python inference.py --tsv ./AHLFx/alpha_model_x.hdf5 ./AHLFx/cross_linking_example.mgf xlink_results.tsv
