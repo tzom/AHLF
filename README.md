@@ -138,12 +138,26 @@ In order to train the model, e.g. on user-specific data, you can use **`training
 
 (the labels are taken from the filenames: **`./training/dummy.phos.mgf`** and **`./training/dummy.other.mgf`**):
 
-Training parameters can be changed in the **`training.py`** script directly.
+Hyperparameters can be changed in the **`training.py`** script directly.
 
 
 ```
 python training.py
 ```
+
+## Fine-tuning
+
+In order to fine-tune the model, e.g. to a specific instrument type, you can use **`finetuning.py`**:
+
+(the labels are taken from the filenames: **`./training/dummy.phos.mgf`** and **`./training/dummy.other.mgf`**):
+
+Hyperparameters can be changed in the **`finetuning.py`** script directly.
+
+
+```
+python finetuning.py model/alpha_model_weights.hdf5 model/finetuned_alpha_model_weights.hdf5 ./training
+```
+
 ## General usage
 
 AHLF can be applied to RAW data (e.g. .RAW-files) by converting them into MGF-files with third-party packages (e.g. https://github.com/compomics/ThermoRawFileParser).
